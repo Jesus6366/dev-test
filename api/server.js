@@ -71,6 +71,7 @@ app.put("/api/users/:id", async (req, res) => {
     }
   });
 
+  // getting the updated user
   const updatedUser = db.data.users.find((u) => u._id === id);
   res.status(200).json({ message: "User updated", user: updatedUser });
 });
