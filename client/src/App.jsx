@@ -1,15 +1,17 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import UserProfile from "./pages/UserProfile";
+import Login from "./pages/Login/Login";
+import "./App.css";
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="user" element={<UserProfile />} />
+        <Route path="/user" element={<UserProfile />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
