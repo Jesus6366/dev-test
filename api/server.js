@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import { JSONFilePreset } from "lowdb/node";
 
-const PORT = 5000;
+const PORT = process.env.PORT || 8000;
 
 // express app instance initiated
 const app = express();
