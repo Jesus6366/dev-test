@@ -4,19 +4,18 @@ import { JSONFilePreset } from "lowdb/node";
 
 const PORT = process.env.PORT || 8000;
 
-// express app instance initiated
+// Express app instance initiated
 const app = express();
 
 // Middlewares
 app.use(cors()); // Allow cross-origin requests from frontend
 app.use(express.json()); // Middleware for parsing JSON bodies
 
-// setting up lowDb
+// Setting up lowDb
 const defaultData = { users: [] };
 const db = await JSONFilePreset("../data/users.json", defaultData);
 
-// Routes
-
+////////////////// Routes  //////////////////////
 // Get All Users
 app.get("/api/users", async (req, res) => {
   const users = db.data.users;
@@ -42,7 +41,7 @@ app.post("/api/login", (req, res) => {
   }
 });
 
-// update user details
+// Update user details
 app.put("/api/users/:id", async (req, res) => {
   const { id } = req.params;
   const { name, email, phone, address, age, eyeColor, password, company } =
@@ -108,6 +107,13 @@ app.put("/api/users/:id", async (req, res) => {
   res.status(200).json({ message: "User updated", user: updatedUser });
 });
 */ 
-app.listen(PORT, () => {
-  `Server running on port  ${PORT}`;
+
+// Catch-all route for 404 errors
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
 });
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
