@@ -27,6 +27,7 @@ const Login = () => {
 
       const user = await response.json();
       navigate("/user");
+
       console.log(user);
     } catch (error) {
       setError(error.message);
