@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import { JSONFilePreset } from "lowdb/node";
+import dotenv from "dotenv";
+dotenv.config();
 
 const PORT = process.env.PORT || 8000;
 
@@ -74,41 +76,6 @@ app.put("/api/users/:id", async (req, res) => {
   });
 });
 
-// update user details
- /* app.put("/api/users/:id", async (req, res) => {
-  const { id } = req.params;
-  const { name, email, phone, address, age, eyeColor, password, company } =
-    req.body;
-
-  await db.update(({ users }) => {
-    const userIndex = users.findIndex((u) => u._id === id);
-    if (userIndex !== -1) {
-      const user = users[userIndex];
-
-      // Update user properties
-      if (name) {
-        user.name.first = name.first || user.name.first;
-        user.name.last = name.last || user.name.last;
-      }
-      user.email = email || user.email;
-      user.phone = phone || user.phone;
-      user.address = address || user.address;
-      user.age = age || user.age;
-      user.eyeColor = eyeColor || user.eyeColor;
-      user.password = password || user.password;
-      user.company = company || user.company;
-
-      // Update the user in the array
-      users[userIndex] = user;
-    }
-  });
-
-  // getting the updated user
-  const updatedUser = db.data.users.find((u) => u._id === id);
-  res.status(200).json({ message: "User updated", user: updatedUser });
-});
-*/ 
-
 // Catch-all route for 404 errors
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
@@ -117,4 +84,3 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
