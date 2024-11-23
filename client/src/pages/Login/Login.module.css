@@ -33,6 +33,7 @@ img {
   border-radius: 5px;
   padding: 0;
   border: none;
+  cursor: pointer;
 }
 
 .btnContainer {
