@@ -6,8 +6,8 @@
       "isActive": true,
       "balance": "$3,585.69",
       "picture": "http://placehold.it/32x32",
-      "age": 30,
-      "eyeColor": "blue",
+      "age": "29",
+      "eyeColor": "Blue",
       "name": {
         "first": "Henderson",
         "last": "Briggs"
