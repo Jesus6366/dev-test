@@ -6,16 +6,8 @@ const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [randomPicture, setRandomPicture] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [updatedUser, setUpdatedUser] = useState();
-  const navigate = useNavigate({
-    name: { first: "", last: "" },
-    email: "",
-    phone: "",
-    address: "",
-    age: "",
-    eyeColor: "",
-    company: "",
-  });
+  const [updatedUser, setUpdatedUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // retriving the user data saved in localStorage
@@ -50,117 +42,194 @@ const UserProfile = () => {
     setIsEditing(true);
   };
 
+  const handleLogout = () => {
+    // Manually removing user data from localStorage and navigating away
+    localStorage.removeItem("user");
+    navigate("/"); // Redirect to login page after logout
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    // If the field is nested, split it into an array of keys
+    const keys = name.split(".");
+    if (keys.length > 1) {
+      setUpdatedUser((prevUser) => ({
+        ...prevUser,
+        [keys[0]]: {
+          ...prevUser[keys[0]],
+          [keys[1]]: value,
+        },
+      }));
+    } else {
+      setUpdatedUser((prevUser) => ({
+        ...prevUser,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleSave = async () => {
+    console.log("Saving user:", updatedUser);
+    try {
+      // api call to update user
+      const response = await fetch(
+        `http://localhost:5000/api/users/${user._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedUser),
+        }
+      );
+      if (response.ok) {
+        const updatedDate = await response.json();
+        setUser(updatedDate); // updating the local user with the new data
+        setIsEditing(false); // canceling the editing mode
+      } else {
+        console.log("Error updating user data ");
+      }
+    } catch (error) {
+      console.log("Error saving user data", error);
+    }
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setUpdatedUser(user);
+  };
+
   // Show a loading until user is set
   if (!user) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      <img
-        src={randomPicture || user.picture}
-        alt="User Avatar"
-        className={styles.picture}
-      />
-      {isEditing ? (
-        <div>
-          <div className={styles.editForm}>
-            <div className={styles.inputGroup}>
-              <label>First Name:</label>
-              <input
-                type="text"
-                name="name.first"
-                value={updatedUser.name.first}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <label>Last Name:</label>
-              <input
-                type="text"
-                name="name.last"
-                value={updatedUser.name.last}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <label>Email:</label>
-              <input
-                type="email"
-                name="email"
-                value={updatedUser.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <label>Phone:</label>
-              <input
-                type="text"
-                name="phone"
-                value={updatedUser.phone}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <label>Address:</label>
-              <input
-                type="text"
-                name="address"
-                value={updatedUser.address}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <label>Age:</label>
-              <input
-                type="number"
-                name="age"
-                value={updatedUser.age}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <label>Eye Color:</label>
-              <input
-                type="text"
-                name="eyeColor"
-                value={updatedUser.eyeColor}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <label>Company:</label>
-              <input
-                type="text"
-                name="company"
-                value={updatedUser.company}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={styles.buttonGroup}>
-              <button onClick={handleSave}>Save</button>
-              <button onClick={handleCancel}>Cancel</button>
-            </div>
-          </div>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <img
+          src={randomPicture || user.picture}
+          alt="User Avatar"
+          className={styles.picture}
+        />
+        <div className={styles.balanceContainer}>
+          <p className={styles.balance}>{user.balance}</p>
+          {!isEditing && (
+            <button className={styles.btn} onClick={handleEdit}>
+              Edit
+            </button>
+          )}
         </div>
-      ) : (
-        <div>
-          <div>
-            <div>{user.balance}</div>
-            <button onClick={handleEdit}>Edit</button>
-          </div>
-          <div className={styles.profileContainer}>
-            <p>Name: {user.name.first + " " + user.name.last}</p>
-            <p>Email: {user.email}</p>
-            <p>Phone: {user.phone}</p>
-            <p>Address: {user.address}</p>
-            <p>Age: {user.age}</p>
-            <p>Eye Color: {user.eyeColor}</p>
-            <p>Company: {user.company}</p>
-            {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
-          </div>
-        </div>
-      )}
+      </div>
+
+      <div className={styles.profileContainer}>
+        {isEditing ? (
+          <>
+            <div className={styles.editForm}>
+              <div className={styles.inputGroup}>
+                <label>First Name:</label>
+                <input
+                  type="text"
+                  name="name.first"
+                  value={updatedUser.name.first}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={styles.inputGroup}>
+                <label>Last Name:</label>
+                <input
+                  type="text"
+                  name="name.last"
+                  value={updatedUser.name.last}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={styles.inputGroup}>
+                <label>Email:</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={updatedUser.email}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={styles.inputGroup}>
+                <label>Phone:</label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={updatedUser.phone}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={styles.inputGroup}>
+                <label>Address:</label>
+                <input
+                  type="text"
+                  name="address"
+                  value={updatedUser.address}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={styles.inputGroup}>
+                <label>Age:</label>
+                <input
+                  type="number"
+                  name="age"
+                  value={updatedUser.age}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={styles.inputGroup}>
+                <label>Eye Color:</label>
+                <input
+                  type="text"
+                  name="eyeColor"
+                  value={updatedUser.eyeColor}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={styles.inputGroup}>
+                <label>Company:</label>
+                <input
+                  type="text"
+                  name="company"
+                  value={updatedUser.company}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={styles.buttonGroup}>
+                <button className={styles.btn} onClick={handleSave}>
+                  Save
+                </button>
+                <button className={styles.btn} onClick={handleCancel}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={styles.profileDetails}>
+              <ul className={styles.profileList}>
+                <li>Name: {user.name.first + " " + user.name.last}</li>
+                <li>Email: {user.email}</li>
+                <li>Phone: {user.phone}</li>
+                <li>Address: {user.address}</li>
+                <li>Age: {user.age}</li>
+                <li>Eye Color: {user.eyeColor}</li>
+                <li>Company: {user.company}</li>
+              </ul>
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className={styles.logoutButtonContainer}>
+        <button className={styles.btn} onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,121 @@
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  border: solid #ccc;
+  color: rgb(91, 89, 89);
+  padding: 30px;
+  margin-top: 10px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.picture {
+  height: 8rem;
+  border-radius: 50%;
+}
+
+.balanceContainer {
+  display: flex;
+  align-items: center;
+}
+
+.balance {
+  margin-right: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.btn {
+  background-color: rgb(218, 216, 216);
+  height: 40px;
+  width: 120px;
+  font-size: 16px;
+  font-weight: bold;
+  color: rgb(59, 58, 58);
+  border-radius: 5px;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.profileContainer {
+  margin-top: 20px;
+  width: 100%;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.profileDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.profileList {
+  list-style-type: disc;
+  margin: 0;
+  padding-left: 20px;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.profileList li {
+  margin: 5px 0;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.inputGroup label {
+  margin-bottom: 5px;
+}
+
+.inputGroup input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.logoutButtonContainer {
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+  .balanceContainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .profileList {
+    padding-left: 10px;
+  }
+  .profileList li {
+    font-size: 0.9rem;
+  }
+}
