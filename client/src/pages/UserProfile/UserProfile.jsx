@@ -49,7 +49,9 @@ const UserProfile = () => {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
+    // Convert to number if the input type is "number"
+    const formattedValue = type === "number" ? parseInt(value, 10) : value;
     // If the field is nested, split it into an array of keys
     const keys = name.split(".");
     if (keys.length > 1) {
@@ -57,7 +59,7 @@ const UserProfile = () => {
         ...prevUser,
         [keys[0]]: {
           ...prevUser[keys[0]],
-          [keys[1]]: value,
+          [keys[1]]: formattedValue,
         },
       }));
     } else {
@@ -83,9 +85,16 @@ const UserProfile = () => {
         }
       );
       if (response.ok) {
-        const updatedDate = await response.json();
-        setUser(updatedDate); // updating the local user with the new data
-        setIsEditing(false); // canceling the editing mode
+        const updatedUser = await response.json();
+        // Update state
+        setUser(updatedUser);
+        // setUpdatedUser(updatedUser);
+
+        // Update localStorage
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+
+        // Exit editing mode
+        setIsEditing(false);
       } else {
         console.log("Error updating user data ");
       }
