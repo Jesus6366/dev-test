@@ -4,6 +4,7 @@ import UserProfile from "./pages/UserProfile/UserProfile";
 import Login from "./pages/Login/Login";
 import "./App.css";
 import RequireAuth from "./components/RequireAuth";
+import NotFound from "./pages/notFound/NotFound";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           }
         />
 
-        <Route path="*" element={<h1>Page not found</h1>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
