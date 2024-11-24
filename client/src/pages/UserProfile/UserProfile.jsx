@@ -113,7 +113,7 @@ const UserProfile = () => {
           className={styles.picture}
         />
         <div className={styles.balanceContainer}>
-          <p className={styles.balance}>{user.balance}</p>
+          <p className={styles.balance}>Balance {user.balance}</p>
           {!isEditing && (
             <button className={styles.btn} onClick={handleEdit}>
               Edit

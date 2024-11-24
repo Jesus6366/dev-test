@@ -5,7 +5,7 @@ import { useState } from "react";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  console.log(password);
+  // console.log(password);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
     // console.log(email, password);
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch("http://localhost:5000/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
