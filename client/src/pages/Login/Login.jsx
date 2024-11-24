@@ -42,7 +42,7 @@ const Login = () => {
   return (
     <div className={styles.container}>
       <img
-        src="../src/assets/logo.png"
+        src="../public/assets/logo.png"
         alt="Company Logo"
         className={styles.logo}
       />
