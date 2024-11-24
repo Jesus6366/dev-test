@@ -49,29 +49,34 @@ const UserProfile = () => {
   };
 
   const handleChange = (e) => {
-    const { name, value, type } = e.target;
-    // Convert to number if the input type is "number"
-    const formattedValue = type === "number" ? parseInt(value, 10) : value;
+    const { name, value } = e.target;
+
     // If the field is nested, split it into an array of keys
     const keys = name.split(".");
+
+    const parsedValue = name === "age" ? parseInt(value, 10) || 0 : value; // Convert age to a number
     if (keys.length > 1) {
       setUpdatedUser((prevUser) => ({
         ...prevUser,
         [keys[0]]: {
           ...prevUser[keys[0]],
-          [keys[1]]: formattedValue,
+          [keys[1]]: parsedValue,
         },
       }));
     } else {
       setUpdatedUser((prevUser) => ({
         ...prevUser,
-        [name]: value,
+        [name]: parsedValue,
       }));
     }
   };
 
   const handleSave = async () => {
     console.log("Saving user:", updatedUser);
+    const formattedUser = {
+      ...updatedUser,
+      age: parseInt(updatedUser.age, 10), // Convert age to a number
+    };
     try {
       // api call to update user
       const response = await fetch(
@@ -81,7 +86,7 @@ const UserProfile = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(updatedUser),
+          body: JSON.stringify(formattedUser),
         }
       );
       if (response.ok) {

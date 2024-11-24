@@ -6,7 +6,7 @@
       "isActive": true,
       "balance": "$3,585.69",
       "picture": "http://placehold.it/32x32",
-      "age": "30",
+      "age": 40,
       "eyeColor": "Blue",
       "name": {
         "first": "Henderson",
@@ -60,7 +60,7 @@
       "isActive": true,
       "balance": "$1,656.46",
       "picture": "http://placehold.it/32x32",
-      "age": 35,
+      "age": 34,
       "eyeColor": "brown",
       "name": {
         "first": "Gibson",
