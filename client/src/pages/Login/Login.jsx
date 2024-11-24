@@ -26,7 +26,12 @@ const Login = () => {
       }
 
       const user = await response.json();
-      navigate("/user");
+
+      // storing the authenticated user in localStorage
+      localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("user", JSON.stringify(user));
+
+      navigate("/user"); // redirect to the user profile page
 
       console.log(user);
     } catch (error) {
@@ -36,7 +41,11 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      <img src="../src/assets/logo.png" alt="" className={styles.logo} />
+      <img
+        src="../src/assets/logo.png"
+        alt="Company Logo"
+        className={styles.logo}
+      />
       <form onSubmit={handleLogin}>
         <div className={styles.loginContainer}>
           <div>
