@@ -41,11 +41,7 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      <img
-        src="../public/logo.png"
-        alt="Company Logo"
-        className={styles.logo}
-      />
+      <img src="/logo.png" alt="Company Logo" className={styles.logo} />
       <form onSubmit={handleLogin}>
         <div className={styles.loginContainer}>
           <div>
