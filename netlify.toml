@@ -1,6 +1,6 @@
 [build]
   functions = "api/functions"   # Path to the folder containing your serverless functions
-  publish = "client/dist"      # Path to the Vite build folder
+  publish = "/dist"      # Path to the Vite build folder
 
 [functions]
   external_node_modules = ["express"]  # Include express module in the serverless function bundle
