@@ -11,7 +11,7 @@ const Login = () => {
 
   const API_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:5000/api/users/login'
-  :  'https://dev-test-jesus.netlify.app/.netlify/functions/api/users/login';  // Updated URL for production
+  :  'https://dev-test-jesus.netlify.app/.netlify/functions/server/api/users/login';  // Updated URL for production
 
   
 
