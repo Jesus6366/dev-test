@@ -11,7 +11,7 @@ const Login = () => {
 
   const API_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:5000/api/users/login'
-  :  '/.netlify/functions/api/users/login';
+  :  '/.netlify/functions/server/api/users/login';
 
   
 
