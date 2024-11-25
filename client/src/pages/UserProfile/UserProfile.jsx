@@ -9,6 +9,10 @@ const UserProfile = () => {
   const [updatedUser, setUpdatedUser] = useState(null);
   const navigate = useNavigate();
 
+  const API_URL = window.location.hostname === 'localhost'
+  ? 'http://localhost:5000/api/users/[user_id]'
+  : 'https://dev-test-jesus.netlify.app/api/users/[user_id]';
+
   useEffect(() => {
     // retriving the user data saved in localStorage
     const loggedInUser = JSON.parse(localStorage.getItem("user"));
@@ -80,7 +84,7 @@ const UserProfile = () => {
     try {
       // api call to update user
       const response = await fetch(
-        `http://localhost:5000/api/users/${user._id}`,
+        API_URL.replace('[user_id]', user._id),
         {
           method: "PUT",
           headers: {

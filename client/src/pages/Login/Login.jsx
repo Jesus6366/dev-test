@@ -9,11 +9,23 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const API_URL = window.location.hostname === 'localhost'
+  ? 'http://localhost:5000/api/users/login'
+  : 'https://dev-test-jesus.netlify.app/api/users/login';
+
+// fetch(API_URL, {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json'
+//   },
+//   body: JSON.stringify(loginData)
+// })
+
   const handleLogin = async (e) => {
     e.preventDefault();
     // console.log(email, password);
     try {
-      const response = await fetch("http://localhost:5000/api/users/login", {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

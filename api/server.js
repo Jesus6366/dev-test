@@ -12,6 +12,11 @@ const app = express();
 
 // Middlewares
 app.use(cors()); // Allow cross-origin requests from frontend
+app.use(cors({
+  origin: ['https://dev-test-jesus.netlify.app', 'http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 app.use(express.json()); // Middleware for parsing JSON bodies
 app.use("/api/users", userRoutes);
 
