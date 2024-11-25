@@ -10,8 +10,8 @@ const UserProfile = () => {
   const navigate = useNavigate();
 
   const API_URL = window.location.hostname === 'localhost'
-  ? 'http://localhost:5000/api/users/[user_id]'
-  : 'https://dev-test-jesus.netlify.app/api/users/[user_id]';
+  ? 'http://localhost:5000/.netlify/functions/api/users/login'  // for local testing
+  : 'https://dev-test-jesus.netlify.app/.netlify/functions/api/users/login';  // for production on Netlify
 
   useEffect(() => {
     // retriving the user data saved in localStorage
